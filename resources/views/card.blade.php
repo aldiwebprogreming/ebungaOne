@@ -78,7 +78,7 @@ input.invalid {
 
           <div class="col-lg-7 mt-2 mt-lg-0 d-flex align-items-stretch">
 
-            <form id="regForm" action="{{$detail->slug_product}}/{{'detail'}}" method="POST">
+            <form id="regForm" action="{{$detail->slug_product}}/{{'detail2'}}" method="POST">
                @csrf
 
                <input type="hidden" name="image" class="form-control" value="{{$detail->images}}">

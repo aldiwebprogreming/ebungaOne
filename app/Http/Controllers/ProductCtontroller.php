@@ -2,12 +2,24 @@
 
 namespace App\Http\Controllers;
 use App\product;
+use App\payment;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 use Session;
+use App\Veritrans\Midtrans;
 
 class ProductCtontroller extends Controller
 {
+
+   public function __construct()
+    {   
+        Midtrans::$serverKey = 'SB-Mid-server-VqiavWlWkHCx1F_vaq_OMdvl';
+        //set is production to true for production mode
+        Midtrans::$isProduction = false;
+    }
+
+
    function index($slug){
 
 
@@ -79,7 +91,44 @@ class ProductCtontroller extends Controller
      
    }
 
-   public function token($harga, $namaPenerima, $emailPenerima, $phonePenerima){
+
+   function keranjang($nama_product, Request $request){
+
+
+          $cart = session('cart');
+
+
+         $cart["$nama_product"] = [
+            'images' => $request->input('image'),
+            'harga' => $request->input('harga'),
+            'namaa_product' => $request->input('nama_product'),
+            'kel' => $request->input('kel'),
+            'kec' => $request->input('kec'),
+            'kab' => $request->input('kab'),
+            'prov' => $request->input('prov'),
+            'jumlah' => $request->input('jumlah'),
+            'tgl_kirim' => $request->input('tgl_kirim'),
+            'catatan' => $request->input('catatan'),
+            'note_papan_bunga' => $request->input('note_papan_bunga'),
+            'alamat_penerima' => $request->input('alamat_penerima'),
+            'nama_penerima' => $request->input('nama_penerima'),
+            'email_penerima' => $request->input('email_penerima'),
+            'telp_penerima' => $request->input('telp_penerima')
+         ];
+
+
+         $harga  = $cart["$nama_product"]['harga'];
+         $namaPenerima =  $cart["$nama_product"]['nama_penerima'];
+         $emailPenerima =  $cart["$nama_product"]['email_penerima'];
+         $phonePenerima =  $cart["$nama_product"]['telp_penerima'];
+
+        
+
+           return view('coba2', ['cari' => $cart], ['namaPenerima' => $namaPenerima, 'harga' => $harga, 'emailPenerima' => $emailPenerima, 'phonePenerima' => $phonePenerima]);
+
+   }
+
+   public function token($nama_product, $harga, $namaPenerima, $emailPenerima, $phonePenerima){
 
       // Set your Merchant Server Key
          \Midtrans\Config::$serverKey = 'SB-Mid-server-VqiavWlWkHCx1F_vaq_OMdvl';
@@ -93,13 +142,13 @@ class ProductCtontroller extends Controller
          $params = array(
              'transaction_details' => array(
                  'order_id' => rand(),
-                 'gross_amount' => $harga,
+                 'gross_amount' => "$harga",
              ),
              'customer_details' => array(
                  'first_name' => "$namaPenerima",
                  // 'last_name' => '',
-                 'email' => $emailPenerima,
-                 'phone' => $phonePenerima,
+                 'email' => "$emailPenerima",
+                 'phone' => "$phonePenerima",
              ),
          );
           
@@ -110,6 +159,129 @@ class ProductCtontroller extends Controller
    
 
    }
+
+
+   public function token2($harga){
+
+        error_log('masuk ke snap token dri ajax');
+        $midtrans = new Midtrans;
+
+        $transaction_details = array(
+            'order_id'      => uniqid(),
+            'gross_amount'  => 200000
+        );
+
+        // Populate items
+        $items = [
+            array(
+                'id'        => 'item1',
+                'price'     => 200000,
+                'quantity'  => 1,
+                'name'      => 'Adidas f50'
+            )
+        ];
+
+        // Populate customer's billing address
+        $billing_address = array(
+            'first_name'    => "Andri",
+            'last_name'     => "Setiawan",
+            'address'       => "Karet Belakang 15A, Setiabudi.",
+            'city'          => "Jakarta",
+            'postal_code'   => "51161",
+            'phone'         => "081322311801",
+            'country_code'  => 'IDN'
+            );
+
+        // Populate customer's shipping address
+        $shipping_address = array(
+            'first_name'    => "John",
+            'last_name'     => "Watson",
+            'address'       => "Bakerstreet 221B.",
+            'city'          => "Jakarta",
+            'postal_code'   => "51162",
+            'phone'         => "081322311801",
+            'country_code'  => 'IDN'
+            );
+
+        // Populate customer's Info
+        $customer_details = array(
+            'first_name'      => "Andri",
+            'last_name'       => "Setiawan",
+            'email'           => "andrisetiawan@asdasd.com",
+            'phone'           => "081322311801",
+            'billing_address' => $billing_address,
+            'shipping_address'=> $shipping_address
+            );
+
+        // Data yang akan dikirim untuk request redirect_url.
+        $credit_card['secure'] = true;
+        //ser save_card true to enable oneclick or 2click
+        //$credit_card['save_card'] = true;
+
+        $time = time();
+        $custom_expiry = array(
+            'start_time' => date("Y-m-d H:i:s O",$time),
+            'unit'       => 'hour', 
+            'duration'   => 2
+        );
+        
+        $transaction_data = array(
+            'transaction_details'=> $transaction_details,
+            'item_details'       => $items,
+            'customer_details'   => $customer_details,
+            'credit_card'        => $credit_card,
+            'expiry'             => $custom_expiry
+        );
+    
+        try
+        {
+            $snap_token = $midtrans->getSnapToken($transaction_data);
+            //return redirect($vtweb_url);
+            echo $snap_token;
+        } 
+        catch (Exception $e) 
+        {   
+            return $e->getMessage;
+        }
+   }
+
+    public function finish(Request $request)
+    {
+        $result = $request->input('result_data');
+        $result = json_decode($result, true);
+        echo $result['status_message'] . '<br>';
+        echo 'RESULT <br><pre>';
+        var_dump($result);
+        echo '</pre>' ;
+
+      
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $no_hp =  $request->input('no_hp');
+        $status_code =  $result['status_code'];
+        $order_id = $result['order_id'];
+        $gross_amount = $result['gross_amount'];
+        $payment_type = $result['payment_type'];
+        $transaction_time = $result['transaction_time'];
+        $transaction_status = $result['transaction_status'];
+
+       $input = DB::table('tbl_payment')->insert([
+
+                'name' => $name,
+                'no_hp' => $no_hp,
+                'email' => $email,
+                'order_id' => $order_id,
+                'gross_amaount' => $gross_amount,
+                'payment_type'=> $payment_type,
+                'transaction_time'=> $transaction_time,
+                'transaction_status' => $transaction_status
+                
+            ]);   
+
+        return redirect('/');
+        
+
+    }
 
 
    function cart($nama_product){
@@ -146,10 +318,7 @@ class ProductCtontroller extends Controller
 
    // }
 
-    function finish(){
-
-      
-    }
+    
 
 
 }
