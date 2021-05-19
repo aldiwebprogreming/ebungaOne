@@ -2,6 +2,8 @@
 
 @section('title','Product')
 
+
+
 @section('content')
 	
  	<!-- @foreach($product as $data)

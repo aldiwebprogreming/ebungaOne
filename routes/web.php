@@ -35,6 +35,8 @@ Route::get('product/card/{nama_product}/snaptoken/{harga}/{namaPenerima}/{emailP
 Route::post('product/card/{nama_product}/snapfinish','ProductCtontroller@finish');
 
 Route::get('register','atuhController@index');
+
+Route::get('hapuskeranjang', 'ProductCtontroller@hapuskeranjang');
 // end snap token terbaru 
 
 

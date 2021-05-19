@@ -95,7 +95,28 @@ class ProductCtontroller extends Controller
    function keranjang($nama_product, Request $request){
 
 
-          $cart = session('cart');
+          // $cart = session('cart');
+
+
+         // $cart = [
+         //    'images' => $request->input('image'),
+         //    'harga' => $request->input('harga'),
+         //    'namaa_product' => $request->input('nama_product'),
+         //    'kel' => $request->input('kel'),
+         //    'kec' => $request->input('kec'),
+         //    'kab' => $request->input('kab'),
+         //    'prov' => $request->input('prov'),
+         //    'jumlah' => $request->input('jumlah'),
+         //    'tgl_kirim' => $request->input('tgl_kirim'),
+         //    'catatan' => $request->input('catatan'),
+         //    'note_papan_bunga' => $request->input('note_papan_bunga'),
+         //    'alamat_penerima' => $request->input('alamat_penerima'),
+         //    'nama_penerima' => $request->input('nama_penerima'),
+         //    'email_penerima' => $request->input('email_penerima'),
+         //    'telp_penerima' => $request->input('telp_penerima')
+         // ];
+
+     $cart = session('cart');
 
 
          $cart["$nama_product"] = [
@@ -116,6 +137,15 @@ class ProductCtontroller extends Controller
             'telp_penerima' => $request->input('telp_penerima')
          ];
 
+
+        //  $product = $cart;
+        // $ses = Session::put("product",$product);
+        // $value = session()->get('product');
+
+        //  $harga  = $value['harga'];
+        //  $namaPenerima =  $value['nama_penerima'];
+        //  $emailPenerima =  $value['email_penerima'];
+        //  $phonePenerima =  $value['telp_penerima'];
 
          $harga  = $cart["$nama_product"]['harga'];
          $namaPenerima =  $cart["$nama_product"]['nama_penerima'];
@@ -318,7 +348,10 @@ class ProductCtontroller extends Controller
 
    // }
 
-    
+    function hapuskeranjang(Request $request){
+        $request->session()->forget('product');
+        return redirect('/');
+    }
 
 
 }

@@ -1,6 +1,11 @@
 @extends('layouts/app')
 @section('title','Detail')
 
+<?php $jml = count($cari) ?>
+
+@section('shop')
+  {{$jml}}
+@endsection
 
 
 @section('content')
