@@ -61,10 +61,10 @@
         <div class="row  justify-content-center">
           <div class="col-lg-6">
             <h3>ebunga</h3>
+            <a href="">Login Seller</a> || <a href="{{url('register/seller')}}">Register Seller</a>
             <p>Et aut eum quis fuga eos sunt ipsa nihil. Labore corporis magni eligendi fuga maxime saepe commodi placeat.</p>
           </div>
         </div>
-
         <div class="row footer-newsletter justify-content-center">
           <div class="col-lg-6">
             <form action="" method="post">

@@ -68,3 +68,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('email','sendEmailController@index')->name('email');
 Route::post('email/send', 'sendEmailController@send');
+
+
+//route seller
+Route::get('register/seller','AuthSellerController@index');
+Route::get('getkabupaten/{idprov}')

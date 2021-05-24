@@ -118,7 +118,7 @@ input.invalid {
 
                   <div class="col-md-6">
                      <label>Jumlah</label>
-                    <input type="number" oninput="this.className= ''" class="form-control" min="1" name="jumlah">
+                    <input type="number" oninput="this.className= 'dfdfdfd'" class="form-control" min="1" name="jumlah">
                   </div>
                  <div class="col-md-6">
                    <label>Tgl Kirim</label>
