@@ -72,4 +72,6 @@ Route::post('email/send', 'sendEmailController@send');
 
 //route seller
 Route::get('register/seller','AuthSellerController@index');
-Route::get('getkabupaten/{idprov}')
+Route::get('getkabupaten/{idprov}','GetController@index');
+Route::get('getkecamatan/{idkab}','GetController@getKec');
+Route::post('daftar','AuthSellerController@daftar');

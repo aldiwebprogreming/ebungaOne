@@ -94,7 +94,9 @@ button:hover {
 </style>
 <body>
 
-<form id="regForm" method="post" action="{{url('dafatar')}}">
+<div id="app">
+
+<form id="regForm" method="post" action="{{url('daftar')}}" enctype="multipart/form-data">
 	 @csrf
   <h1><strong>Sign Up Your User Account</strong></h1>
   <p style="text-align: center;">Fill all form field to go to next step</p>
@@ -167,7 +169,7 @@ button:hover {
     	<div class="col-sm-6">
         	<div class="form-group">
 			    <label style="font-weight: bold;">Regency <i>/ Kabupaten *</i></label>
-			  <select id="kabupaten" class="form-control" name="provinsi">
+			  <select id="kabupaten" class="form-control" name="kabupaten">
 			  		<option></option>
 			  	</select>
 	 		 </div>
@@ -176,7 +178,7 @@ button:hover {
     	<div class="col-sm-6">
         	<div class="form-group">
 			    <label style="font-weight: bold;">Districts <i>/ Kecamatan *</i></label>
-			  <select class="form-control" name="provinsi">
+			   <select id="kecamatan" class="form-control" name="kecamatan">
 			  		<option></option>
 			  	</select>
 	 		 </div>
@@ -194,18 +196,24 @@ button:hover {
 
   	 <div class="form-group">
 	    <label  style="font-weight: bold;">KTP <i>/ ID Card (required)</i></label>
-	    <input type="file" class="form-control" placeholder="Enter file" name="ktp">
+	    <input type="file" v-on:change="upload" class="form-control" placeholder="Enter file" name="ktp" id="ktp">
+      <p><img :src="preview" v-if="preview" style="height: 100px; margin-top: 30px; "></p>
+        <button  v-on:click="deleteimg" v-if="preview" class="badge badge-primary">Delete file</button>
 	 </div>
 
 	 <div class="form-group">
 	    <label style="font-weight: bold;">Npwp (required)</i></label>
-	    <input type="file" class="form-control" placeholder="Enter file" name="npwp">
+	    <input type="file" v-on:change="uploadNpwp" class="form-control" placeholder="Enter file" name="npwp" id="npwp">
+       <p><img :src="previewNpwp" v-if="previewNpwp" style="height: 100px; margin-top: 30px; "></p>
+        <button  v-on:click="deleteimgNpwp" v-if="previewNpwp" class="badge badge-primary">Delete file</button>
 	 </div>
 
 
 	 <div class="form-group">
 	    <label style="font-size: 12px; font-weight: bold;">SIUP / KK (*Upload with KK if does not have a SIUP / Upload dengan KK apabila tidak memiliki SIUP)ed)</i></label>
-	    <input type="file" class="form-control" placeholder="Enter file" name="siup">
+	    <input type="file" v-on:change="uploadKK" class="form-control" placeholder="Enter file" name="siup" id="kk">
+      <p><img :src="previewKK" v-if="previewKK" style="height: 100px; margin-top: 30px; "></p>
+        <button  v-on:click="deleteimgKK" v-if="previewKK" class="badge badge-primary">Delete file</button>
 	 </div>
    <!--  <p><input placeholder="dd" oninput="this.className = ''" name="dd"></p>
     <p><input placeholder="mm" oninput="this.className = ''" name="nn"></p>
@@ -221,6 +229,9 @@ button:hover {
   <!-- Circles which indicates the steps of the form: -->
   
 </form>
+
+
+</div>
 
 
 
@@ -305,16 +316,72 @@ function fixStepIndicator(n) {
 		$("#prov").change(function(){
   		var id_prov = $(this).val();
   		var url = "<?= url('getkabupaten')  ?>/"+id_prov;
-  		
   		  $("#kabupaten").load(url);
-  		  
-  		 
-
-
-
-
 		});
+
+    $("#kabupaten").change(function(){
+      var id_kab = $(this).val();
+      var urlKab = "<?= url('getkecamatan')  ?>/"+id_kab;
+        $("#kecamatan").load(urlKab);
+    })
+
 	})
+</script>
+
+<!-- script vue js -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+<script>
+  const vm = new Vue({
+    el: "#app",
+    data: function(){
+      return{
+        gambar: '',
+        preview: '',
+        gambarNpwp: '',
+        previewNpwp: '',
+        gambarKK: '',
+        previewKK: ''
+      }
+    },
+
+    methods: {
+      upload: function(event){
+        // console.log(event.target.files[0].name)
+        var namagambar = event.target.files[0].name
+        this.gambar = namagambar
+        this.preview = URL.createObjectURL(event.target.files[0])
+      },
+
+      deleteimg: function(){
+        this.preview = ''
+        $("#ktp").val('')
+      },
+
+      uploadNpwp :function(){
+         var namagambarNpwp = event.target.files[0].name
+        this.gambarNpwp = namagambarNpwp
+        this.previewNpwp = URL.createObjectURL(event.target.files[0])
+      },
+
+      deleteimgNpwp: function(){
+        this.previewNpwp = ''
+        $("#npwp").val('')
+      },
+
+      uploadKK :function(){
+         var namagambarKK = event.target.files[0].name
+        this.gambarKK = namagambarKK
+        this.previewKK = URL.createObjectURL(event.target.files[0])
+      },
+
+      deleteimgKK: function(){
+        this.previewKK = ''
+        $("#kk").val('')
+      }
+
+    }
+  })
 </script>
 
 </body>
