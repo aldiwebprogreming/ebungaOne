@@ -63,6 +63,11 @@ button {
   cursor: pointer;
 }
 
+button #nexBtn{
+  display: none;
+}
+
+
 button:hover {
   opacity: 0.8;
 }
@@ -106,8 +111,9 @@ button:hover {
     <span class="step"></span>
     <span class="step"></span>
     <span class="step"></span>
-   
+    
   </div>
+
   <div class="tab">
   	<h3 class="mb-4" style="">Acount</h3>
 
@@ -128,14 +134,18 @@ button:hover {
 
  	  <div class="form-group">
 	    <label style="font-weight: bold;">Password <i>/ Password (required)</i></label>
-	    <input type="password" class="form-control" placeholder="Enter password" name="password">
+	    <input type="password" v-model="password" class="form-control" placeholder="Enter password" name="password" minlength="8">
  	 </div>
 
 
  	  <div class="form-group">
 	    <label style="font-weight: bold;">Repeat Password <i>/ Ulangi Password (required)</i></label>
-	    <input type="password" class="form-control" placeholder="Enter repeat password" name="password1">
+	    <input type="password" v-model="password1" class="form-control" placeholder="Enter repeat password" name="password1" minlength="8">
  	 </div>
+
+   <p v-if="password === ''" v-text="pesan" style="color: red"></p>
+    <p v-if="password !== password1" style="color: red">Password belum sama</p>
+  <!--   <p v-text="cek()"></p> -->
 
 <!-- 								 	 
     <p><input placeholder="First name..." oninput="this.className = ''" name="fname"></p>
@@ -223,7 +233,7 @@ button:hover {
   <div style="overflow:auto;">
     <div style="float:right;">
       <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-      <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+      <button v-if="next == 'active'" v-bind:class="{disabled:next == 'active'}" type="button" id="nextBtn" onclick="nextPrev(1)" v-on:click="event($event)">Next</button>
     </div>
   </div>
   <!-- Circles which indicates the steps of the form: -->
@@ -341,7 +351,13 @@ function fixStepIndicator(n) {
         gambarNpwp: '',
         previewNpwp: '',
         gambarKK: '',
-        previewKK: ''
+        previewKK: '',
+        password :'',
+        password1 : '',
+        pesan: 'Isi password anda',
+        next : 'active',
+        loading : '',
+
       }
     },
 
@@ -378,7 +394,22 @@ function fixStepIndicator(n) {
       deleteimgKK: function(){
         this.previewKK = ''
         $("#kk").val('')
+      },
+
+      cek : function(){
+        if (this.password == '') {
+            return this.next = 'nonactive'
+        } else if (this.password === this.password1) {
+          return this.next = 'active'
+        }
+      },
+
+      event : function(event){
+        var text = event.target.outerText;
+        this.loading = text;
       }
+
+     
 
     }
   })

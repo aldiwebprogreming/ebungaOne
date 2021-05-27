@@ -75,3 +75,8 @@ Route::get('register/seller','AuthSellerController@index');
 Route::get('getkabupaten/{idprov}','GetController@index');
 Route::get('getkecamatan/{idkab}','GetController@getKec');
 Route::post('daftar','AuthSellerController@daftar');
+Route::get('seller/login','AuthSellerController@login');
+Route::post('cek/seller','AuthSellerController@store');
+
+// Dashbord seller
+Route::get('seller','SellerController@index')->middleware('Ceksession');
