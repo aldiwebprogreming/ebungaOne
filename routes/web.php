@@ -81,4 +81,5 @@ Route::post('cek/seller','AuthSellerController@store');
 // Dashbord seller
 Route::get('seller','SellerController@index');
 Route::get('seller/upload-product','SellerController@upload');
+Route::post('seller/upload','SellerController@uploadproduct');
 // ->middleware('Ceksession');
