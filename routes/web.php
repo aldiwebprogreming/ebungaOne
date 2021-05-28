@@ -79,4 +79,6 @@ Route::get('seller/login','AuthSellerController@login');
 Route::post('cek/seller','AuthSellerController@store');
 
 // Dashbord seller
-Route::get('seller','SellerController@index')->middleware('Ceksession');
+Route::get('seller','SellerController@index');
+Route::get('seller/upload-product','SellerController@upload');
+// ->middleware('Ceksession');

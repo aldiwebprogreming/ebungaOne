@@ -7,8 +7,14 @@ use Illuminate\Http\Request;
 class SellerController extends Controller
 {
     function index(){
-    		return "Halaman Dashbord";
+    		
+    	 return view('seller/dashboard');
 
 		
+    }
+
+    function upload(){
+
+    	return view('seller/uploadproduct');
     }
 }
