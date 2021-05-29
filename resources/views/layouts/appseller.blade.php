@@ -139,10 +139,12 @@
               <span class="menu-title">Upload Product</span>
             </a>
           </li>
+
+        
           <li class="nav-item">
-            <a class="nav-link" href="pages/documentation/documentation.html">
+            <a class="nav-link" href="{{url('seller/set-zona')}}">
               <i class="icon-paper menu-icon"></i>
-              <span class="menu-title">Product</span>
+              <span class="menu-title">Set Coverage Zona</span>
             </a>
           </li>
         </ul>

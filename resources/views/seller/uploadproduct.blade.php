@@ -11,13 +11,13 @@
                   <div class="d-flex flex-wrap mb-5">
                     
                   </div>
-                  <form  method="post" action="{{url('fgfgfgfg')}}">
+                  <form  method="post" action="{{url('upload')}}" enctype="multipart/form-data">
 					 @csrf
                   	<div class="row">
                   		<div class="col-sm-6">
 						  <div class="form-group">
 						    <label for="exampleFormControlInput1">Category / Kategori *</label>
-						    <select class="form-control" name="katagori">
+						    <select class="form-control" name="kategori">
 						    	<option>Bunga</option>
 						    	<option>Parcel</option>
 						    	<option>Papan Bunga</option>
@@ -25,8 +25,8 @@
 						    </select>
 						  </div>
 						 </div>
-
 					<div class="col-sm-6">
+
 
 					   <div class="form-group">
 					    <label for="exampleFormControlInput1">Name Product / Nama Product</label>
@@ -180,5 +180,7 @@
     }
   })
 </script>
+
+@include('sweetalert::alert')
 
 @endsection
