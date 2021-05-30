@@ -62,3 +62,9 @@ Route::post('snap/snapfinish','SnapController@finish');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+// route send email
+
+Route::get('email','sendEmailController@index')->name('email');
+Route::post('email/send', 'sendEmailController@send');
