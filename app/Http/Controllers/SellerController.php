@@ -63,9 +63,19 @@ class SellerController extends Controller
 
 
     function setzona(){
-      $data = 'Kota Medan';
+      $data = '1101';
 
-    // $zona = DB::table('kecamatan');
-       return view('seller/setzona');
+    $zona = DB::table('tbl_kecamatan')->where('id_kab', $data)->get();
+       return view('seller/setzona',['zona' => $zona]);
+    }
+
+
+    function listkeluarahan($id){
+
+       // $data = '120509';
+         $kel = DB::table('tbl_kelurahan')->where('id_kec', $id)->get();
+            return view('seller/get_kel',['kel' => $kel]);
+     
+
     }
 }
