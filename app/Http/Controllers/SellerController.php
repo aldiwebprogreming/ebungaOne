@@ -74,8 +74,36 @@ class SellerController extends Controller
 
        // $data = '120509';
          $kel = DB::table('tbl_kelurahan')->where('id_kec', $id)->get();
-            return view('seller/get_kel',['kel' => $kel]);
+            return view('seller/setzona',['kel' => $kel]);
      
 
+    }
+
+    function inputzona(Request $request){
+        $get = $request->zona;
+        $list = count($get);
+
+        for ($i=0; $i < $list ; $i++) { 
+                
+
+        $insert_area = DB::table('tbl_area')->insert([
+            'nama_seller' => 'aldi',
+            'kode_seller' => 'EBG4545',
+            'kel' => '3434',
+            'kec' => '434',
+            'kab' => '343434',
+            'provinsi' => '11',    
+        ]);
+
+          return redirect('seller/set-zona')->with('success', 'Task Created Successfully!');
+
+         } 
+
+      
+       
+            
+        
+
+         
     }
 }

@@ -27,7 +27,12 @@ class AuthSellerController extends Controller
 		$imgName3 =  $request->siup->getClientOriginalName() .'-' . time() . '.' . $request->siup->extension(); 
 		$request->siup->move(public_path('img'), $imgName3);
 
+		$kode = rand(1, 100000);
+		$kode_seller = "EBG".$kode;
+
+
 		$insert = DB::table('tbl_akun_seller')->insert([
+			'kode_seller' => $kode_seller,
 			'full_neme' => $request->full_name,
 			'email' => $request->email,
 			'no_hp' => $request->nohp,

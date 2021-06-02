@@ -118,6 +118,7 @@ button:hover {
   	<h3 class="mb-4" style="">Acount</h3>
 
   	<div class="form-group">
+      
 	    <label style="font-weight: bold;">Handphone Number <i>/ Nomor HP (required)</i></label>
 	    <input type="number" name="nohp" class="form-control" placeholder="Enter handphone number">
 	</div>

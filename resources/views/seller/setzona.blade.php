@@ -1,7 +1,10 @@
 @extends('layouts/appseller')
 @section('content')
+<?php 
+	use Illuminate\Support\Facades\DB;
+ ?>
 
-<div id="app">
+	<div id="app">
 		<div class="content-wrapper">
 			<div class="card">
                 <div class="card-body">
@@ -10,19 +13,17 @@
                   <div class="d-flex flex-wrap mb-5">
                     
                   </div>
-                  <form  method="post" action="{{url('upload')}}" enctype="multipart/form-data">
+                	<form method="post" action="{{url('seller/creat-zona')}}">
 					 @csrf
 					<div id="list-example" class="list-group">
 						@foreach($zona as $data)
 
-					  <a id="kel1" v-on:click='submit($event, <?= $data->id_kec ?>)' class="list-group-item list-group-item-action" href="#" data-toggle="modal" data-target="#exampleModal">{{$data->nama}}</a>
+					  <a id="kel1" class="list-group-item list-group-item-action" href="#" data-toggle="modal" data-target="#aa<?= $data->id_kec ?>">{{$data->nama}}</a>
 					  
-					  <div dir="list">
-					  	
-					  </div>
+					 
 					 
 
-					  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal fade" id="aa<?= $data->id_kec ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					  <div class="modal-dialog" role="document">
 					    <div class="modal-content">
 					      <div class="modal-header">
@@ -34,17 +35,31 @@
 
 					      </div>
 					      <div class="modal-body">
-					      	<p style="color: blue;"><input type="checkbox" name="all" v-model="val"> choose all</p>
-					      	
-					        <div id="kecamatan">
+					      	<p style="color: blue;"><input type="checkbox" name="all" > choose all</p>
+					      
+					        <div id="kelurahan">
+					        	
+					        		
+					        	
+					        	<?php 
 
-			
+					        		$data_kel =DB::table('tbl_kelurahan')->where('id_kec', $data->id_kec)->get();
+					        		
+					        	 ?>
+
+					        	 @foreach($data_kel as $data2)
+					        	 	<hr>
+					        	 	 <input v-model='val' type="checkbox" name="zona[]" value="{{$data2->nama}}"> <label>{{$data2->nama}}</label><br>
+   								 @endforeach
+
+   								 <p v-text='val'></p>
 							</div>
 					      </div>
 					      <div class="modal-footer">
 					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					        <button type="button" class="btn btn-primary">Save changes</button>
+					        <input type="submit" name="kirim" class="btn btn-primary" value="Save">
 					      </div>
+					      </form>
 					    </div>
 					  </div>
 					</div>
@@ -53,7 +68,7 @@
 
 					</div>
 
-					</form>
+				
 
 					
                  
@@ -83,23 +98,13 @@
         gambar: '',
        	nama: 'aldi',
        	list : false,
-       	val : '',
+       	val : [],
         
 
       }
     },
 
-    methods: {
-      submit: function(event, id_kec){
-         event.preventDefault()
-      	var id = id_kec
-      	var url = "<?= url('seller/listkelurahan/')  ?>/"+id;
-        $("#kecamatan").load(url);       
-      },
-
-      
-
-    }
+    
   })
 </script>
 

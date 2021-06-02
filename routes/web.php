@@ -84,5 +84,6 @@ Route::get('seller/upload-product','SellerController@upload');
 Route::post('upload/','SellerController@uploadproduct');
 Route::get('seller/set-zona', 'SellerController@setzona');
 Route::get('seller/listkelurahan/{id}', 'SellerController@listkeluarahan');
+Route::post('seller/creat-zona', 'SellerController@inputzona');
 
 // ->middleware('Ceksession');]
