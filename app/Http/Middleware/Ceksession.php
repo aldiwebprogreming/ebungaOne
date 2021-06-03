@@ -16,10 +16,8 @@ class Ceksession
     public function handle($request, Closure $next)
     {
 
-        if (session('email')) {
-            return redirect('/seller');
-        }else {
-            return redirect('seller/login');
+        if (!session('email')) {
+           return redirect('seller/login');
         }
 
         return $next($request);

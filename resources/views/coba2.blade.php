@@ -28,7 +28,7 @@
               <div class="row">
                 <div class="col-md-5">
                    <center>
-                  <img src="{{ url('assets')}}/{{$val['images']}}" style="height: 100px;"><br>
+                  <img src="{{ url('img_product')}}/{{$val['images']}}" style="height: 100px;"><br>
                    
                     <a href="{{ url('hapuskeranjang') }}" class="btn btn-danger badge badge-danger mt-3">Hapus Keranjang</a>
                     </center>

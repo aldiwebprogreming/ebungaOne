@@ -66,11 +66,11 @@ input.invalid {
           <div class="col-lg-5 d-flign-items-stretch">
             <div class="info">
             	<center>
-             <img src="{{ url('assets')}}/{{$detail->images}}">
+             <img src="{{ url('img_product')}}/{{$detail->images}}" style="height: 200px;">
              <hr>
-             <img src="{{ url('assets')}}/{{$detail->images}}" style="height: 70px; border: 3px solid green;">
-              <img src="{{ url('assets')}}/{{$detail->images}}" style="height: 70px; border: 3px solid green;">
-             <img src="{{ url('assets')}}/{{$detail->images}}" style="height: 70px; border: 3px solid green;">
+             <img src="{{ url('img_product')}}/{{$detail->images}}" style="height: 70px; border: 3px solid green;">
+              <img src="{{ url('img_product')}}/{{$detail->images}}" style="height: 70px; border: 3px solid green;">
+             <img src="{{ url('img_product')}}/{{$detail->images}}" style="height: 70px; border: 3px solid green;">
              </center>
             </div>
 

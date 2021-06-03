@@ -77,13 +77,17 @@ Route::get('getkecamatan/{idkab}','GetController@getKec');
 Route::post('daftar','AuthSellerController@daftar');
 Route::get('seller/login','AuthSellerController@login');
 Route::post('cek/seller','AuthSellerController@store');
+Route::get('seller/logout','AuthSellerController@logout');
 
 // Dashbord seller
-Route::get('seller','SellerController@index');
-Route::get('seller/upload-product','SellerController@upload');
-Route::post('upload/','SellerController@uploadproduct');
-Route::get('seller/set-zona', 'SellerController@setzona');
-Route::get('seller/listkelurahan/{id}', 'SellerController@listkeluarahan');
-Route::post('seller/creat-zona', 'SellerController@inputzona');
+Route::get('seller','SellerController@index')->middleware('Ceksession');
+Route::get('seller/upload-product','SellerController@upload')->middleware('Ceksession');
+Route::post('upload/','SellerController@uploadproduct')->middleware('Ceksession');
+Route::get('seller/set-zona', 'SellerController@setzona')->middleware('Ceksession');
+Route::get('seller/listkelurahan/{id}', 'SellerController@listkeluarahan')->middleware('Ceksession');
+Route::post('seller/creat-zona', 'SellerController@inputzona')->middleware('Ceksession');
+Route::get('seller/list-zona', 'SellerController@list_zona')->middleware('Ceksession');
+
+
 
 // ->middleware('Ceksession');]

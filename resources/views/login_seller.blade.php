@@ -162,5 +162,5 @@ button:hover {
 </body>
 </html>
 
-  
+@include('sweetalert::alert')
 @endsection

@@ -83,18 +83,31 @@ class AuthSellerController extends Controller
 		
 		if ($cek == true) {
 			if (password_verify($pass, $cek->password)) {
-				session(['email' => $email]);
+				session([
+					'email' => $email,
+					'name' => $cek->full_neme,
+					'prov' => $cek->provinsi,
+					'kab' => $cek->kabupaten,
+					'kec' => $cek->kecamatan,
+					'kode_seller' => $cek->kode_seller
+
+				]);
 				return redirect('/seller');
 			}else {
-				echo "password anda salah";
+				 return redirect('seller/login')->with('toast_error', 'Password wrong');
 			}
 		} else {
-			echo "akun anda salah";
+			 return redirect('seller/login')->with('toast_error', 'Account wrong');;
 		}
 
 		
 			
 		
+	}
+
+	function logout(Request $request){
+		$request->session()->flush();
+		return redirect('seller/login');
 	}
     
 }

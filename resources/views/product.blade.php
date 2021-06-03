@@ -46,7 +46,7 @@
 
 			<div class="col-md-3">
 				<div class="card" style="">
-				  <img class="card-img-top" src="{{url('assets')}}/{{$data->images}}" alt="Card image cap">
+				  <img class="card-img-top" src="{{url('img_product')}}/{{$data->images}}" alt="Card image cap">
 				  <div class="card-body">
 				    <h5 class="card-title">{{$data->nama_product}}</h5>
 				    <p class="card-text">{{$data->keterangan}}</p>

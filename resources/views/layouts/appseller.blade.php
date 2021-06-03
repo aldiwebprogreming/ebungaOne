@@ -100,7 +100,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
               
-              <a class="dropdown-item">
+              <a href="{{url('seller/logout')}}" class="dropdown-item">
                 <i class="ti-power-off text-primary"></i>
                 Logout
               </a>
@@ -108,7 +108,7 @@
           </li>
           <li class="nav-item nav-settings d-none d-lg-flex">
             <a class="nav-link" href="#">
-              <i class="icon-ellipsis"></i>
+              {{session('name')}}
             </a>
           </li>
         </ul>
@@ -127,7 +127,7 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="{{url('seller/')}}">
               <i class="icon-grid menu-icon"></i>
               <span class="menu-title">Dashboard</span>
             </a>
@@ -140,13 +140,23 @@
             </a>
           </li>
 
-        
           <li class="nav-item">
             <a class="nav-link" href="{{url('seller/set-zona')}}">
-              <i class="icon-paper menu-icon"></i>
+              <i class="icon-grid menu-icon"></i>
               <span class="menu-title">Set Coverage Zona</span>
             </a>
           </li>
+
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{url('seller/list-zona')}}">
+              <i class="icon-table menu-icon"></i>
+              <span class="menu-title">List Coverage Zona</span>
+            </a>
+          </li>
+
+        
+          
         </ul>
       </nav>
       <!-- partial -->
