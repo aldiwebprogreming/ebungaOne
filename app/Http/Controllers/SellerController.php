@@ -44,7 +44,7 @@ class SellerController extends Controller
         $zona_seller = DB::table('tbl_area')->where('kode_seller', $kode_seller)->get();
         $prov = DB::table('tbl_provinsi')->where('id_prov', $id_prov)->first();
         $kab = DB::table('tbl_kabupaten')->where('id_kab', $id_kab)->first();
-        $kec = DB::table('tbl_kecamatan')->where('id_kec', $id_kec)->first();
+        // $kec = DB::table('tbl_kecamatan')->where('id_kec', $id_kec)->first();
 
         $str = $kab->nama;
         $seleksi = ltrim($str, "KAB.");
@@ -53,11 +53,11 @@ class SellerController extends Controller
 
 
         foreach ($zona_seller as $data) {
-             $slug = strtolower(Str::of($data->kel." ".$kec->nama." ".$seleksi." ".$prov->nama)->slug('-'));
+             $slug = strtolower(Str::of($data->kel." ".$data->kec." ".$seleksi." ".$prov->nama)->slug('-'));
             $insert = DB::table('product')->insert([
             'slug' => $slug,
             'kelurahan' => $data->kel,
-            'kecamatan' => $kec->nama,
+            'kecamatan' => $data->kec,
             'kabupaten' => ltrim($kab->nama,"KAB."),
             'provinsi' =>$prov->nama,
             'slug_product' => $slug_product,
@@ -96,15 +96,7 @@ class SellerController extends Controller
     }
 
 
-    function listkeluarahan($id){
-
-       // $data = '120509';
-         $kel = DB::table('tbl_kelurahan')->where('id_kec', $id)->get();
-            return view('seller/setzona',['kel' => $kel]);
-     
-
-    }
-
+    
     function inputzona(Request $request){
         $get = $request->zona;
         $list = count($get);
@@ -112,8 +104,12 @@ class SellerController extends Controller
         $kode_seller = session('kode_seller');
         $prov = session('prov');
         $kab = session('kab');
-        $kec = session('kec');
 
+        $name_kel = $get[0];
+        $kel = DB::table('tbl_kelurahan')->where('nama', $name_kel)->first();
+        $kec = DB::table('tbl_kecamatan')->where('id_kec', $kel->id_kec)->first();
+        $kab1 = DB::table('tbl_kabupaten')->where('id_kab', $kab)->first();
+        $prov1 = DB::table('tbl_provinsi')->where('id_prov', $prov)->first();
 
         for ($i=0; $i < $list ; $i++) { 
                 
@@ -122,9 +118,9 @@ class SellerController extends Controller
             'nama_seller' => $name_seller,
             'kode_seller' => $kode_seller,
             'kel' => $get[$i],
-            'kec' => $kec,
-            'kab' => $kab,
-            'provinsi' => $prov,    
+            'kec' => $kec->nama,
+            'kab' => $kab1->nama,
+            'provinsi' => $prov1->nama,    
         ]);
 
         
@@ -132,11 +128,30 @@ class SellerController extends Controller
 
       
         return redirect('seller/set-zona')->with('success', 'Set zone successfully');
+
         
+        
+    }
+
+    function get_kec($id){
+
+        return DB::table('tbl_kecamatan')->where('id_kec', $id)->first();
+
+    }
+
+    function get_kab(){
+        return DB::table('tbl_kabupaten')->where('id_kab', session('kab'))->get();
     }
 
 
     function list_zona(){
-        return view('seller/list_zona');
+        $kode = session('kode_seller');
+        $get = DB::table('tbl_area')->where('kode_seller', $kode)->get();
+        foreach ($get as $data) {
+            $kec = DB::table('tbl_area')->where('kec', $data->kec)->first();
+        }
+        return view('seller/list_zona', ['list' => $get, 'kec' => $kec]);
+       
+      
     }
 }

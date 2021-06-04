@@ -38,6 +38,8 @@
 					      	<p style="color: blue;"><input type="checkbox" name="all" > choose all</p>
 					      
 					        <div id="kelurahan">
+
+
 					        	
 					        		
 					        	
@@ -49,6 +51,7 @@
 
 					        	 @foreach($data_kel as $data2)
 					        	 	<hr>
+					        	 		
 					        	 	 <input v-model='val' type="checkbox" name="zona[]" value="{{$data2->nama}}"> <label>{{$data2->nama}}</label><br>
    								 @endforeach
 

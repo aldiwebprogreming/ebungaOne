@@ -101,9 +101,9 @@ button:hover {
 
 <div id="app">
 
-<form id="regForm" method="post" action="{{url('cek/seller')}}">
+<form id="regForm" method="post" action="{{url('ebunga/ceklogin')}}">
   @csrf
-  <h4 style="text-align: center;">Seller Sign In</h4>
+  <h4 style="text-align: center;">Sign In</h4>
   
       <div class="form-group">
         <label for="exampleInputEmail1">Email address</label>
@@ -121,7 +121,7 @@ button:hover {
        @enderror
       </div>
 
-      <button type="submit" class="btn btn-sucess">SIGN IN</button>
+      <button type="submit" class="btn btn-success">SIGN IN</button>
     
     
 </form>

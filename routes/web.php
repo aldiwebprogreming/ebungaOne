@@ -34,9 +34,16 @@ Route::post('product/card/{nama_product}/detail2','ProductCtontroller@keranjang'
 Route::get('product/card/{nama_product}/snaptoken/{harga}/{namaPenerima}/{emailPenerima}/{phonePenerima}','ProductCtontroller@token');
 Route::post('product/card/{nama_product}/snapfinish','ProductCtontroller@finish');
 
-Route::get('register','atuhController@index');
+// Route::get('register','atuhController@index');
+
+Route::get('ebunga/register','AuthUserController@register');
+Route::get('ebunga/login','AuthUserController@index');
+Route::post('ebunga/creat-register','AuthUserController@creat');
+Route::post('ebunga/ceklogin','AuthUserController@cek_login');
+Route::get('ebunga/logout', 'AuthUserController@logout');
 
 Route::get('hapuskeranjang', 'ProductCtontroller@hapuskeranjang');
+
 // end snap token terbaru 
 
 
