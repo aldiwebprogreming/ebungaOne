@@ -20,6 +20,7 @@
                       </thead>
                       <tbody>
                         @foreach($list as $data)
+                          @if($kec === $data->kel)
                         <tr>
                          
                           <td>{{$data->kec}}</td>
