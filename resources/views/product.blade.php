@@ -48,10 +48,11 @@
 				<div class="card" style="">
 				  <img class="card-img-top" src="{{url('img_product')}}/{{$data->images}}" alt="Card image cap">
 				  <div class="card-body">
-				    <h5 class="card-title">{{$data->nama_product}}</h5>
-				    <p class="card-text">{{$data->keterangan}}</p>
+				    <h5 class=" text-center">{{$data->nama_product}}</h5>
+				    <p class="card-text text-center">{{$data->keterangan}}</p>
+				    <p class="text-center" style="color: green">Rp. <?php echo number_format($data->harga, 0, ',', '.'); ?></p>
 				    <center>
-				    <a href="card/{{$data->slug_product}}" class="btn btn-primary">Order</a>
+				    <a href="card/{{$data->slug_product}}/{{$data->slug}}" class="btn btn-primary">Order</a>
 				    </center>
 				  </div>
 				</div>

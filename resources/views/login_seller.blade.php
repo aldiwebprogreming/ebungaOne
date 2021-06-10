@@ -121,7 +121,10 @@ button:hover {
        @enderror
       </div>
 
-      <button type="submit" class="btn btn-sucess">SIGN IN</button>
+      <button type="submit" class="btn btn-success">SIGN IN</button>
+
+      <a href="{{url('seller/register')}}" class="float-right">Register account seller ?</a>
+       <a href="#" class="float-right">Forget Password ? , </a>
     
     
 </form>

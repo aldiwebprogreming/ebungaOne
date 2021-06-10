@@ -203,7 +203,7 @@ button:hover {
 
 
   <div class="tab">
-  	<h3 class="mb-4" style="">Zone</h3>
+  	<h3 class="mb-4" style="">Document</h3>
 
   	 <div class="form-group">
 	    <label  style="font-weight: bold;">KTP <i>/ ID Card (required)</i></label>

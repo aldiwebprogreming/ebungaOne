@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\product;
 use App\payment;
+use App\order;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
@@ -32,14 +33,16 @@ class ProductCtontroller extends Controller
    		
    }
 
-   function card($nama_product){
+   function card($slug_product, $slug ){
 
 
          $tgl            = date("m/d/Y");
          $dua_hari       = mktime(0,0,0,date("n"),date("j")+2,date("Y"));
          $delivery       = date("m/d/Y", $dua_hari);
 
-   		$det_product = product::where('slug_product', $nama_product)->first();
+   		$det_product = product::where(['slug_product' => $slug_product, 'slug' => $slug])->first();
+
+        // var_dump($det_product);
    		return view('card',['detail' => $det_product],['tgl' => $delivery]);
    }
 
@@ -116,48 +119,58 @@ class ProductCtontroller extends Controller
          //    'telp_penerima' => $request->input('telp_penerima')
          // ];
 
-     $cart = session('cart');
+     // $cart = session('cart');
 
 
-         $cart["$nama_product"] = [
-            'images' => $request->input('image'),
-            'harga' => $request->input('harga'),
-            'namaa_product' => $request->input('nama_product'),
-            'kel' => $request->input('kel'),
-            'kec' => $request->input('kec'),
-            'kab' => $request->input('kab'),
-            'prov' => $request->input('prov'),
-            'jumlah' => $request->input('jumlah'),
-            'tgl_kirim' => $request->input('tgl_kirim'),
-            'catatan' => $request->input('catatan'),
-            'note_papan_bunga' => $request->input('note_papan_bunga'),
-            'alamat_penerima' => $request->input('alamat_penerima'),
-            'nama_penerima' => $request->input('nama_penerima'),
-            'email_penerima' => $request->input('email_penerima'),
-            'telp_penerima' => $request->input('telp_penerima')
-         ];
+     //     $cart["$nama_product"] = [
+     //        'images' => $request->input('image'),
+     //        'harga' => $request->input('harga'),
+     //        'namaa_product' => $request->input('nama_product'),
+     //        'kel' => $request->input('kel'),
+     //        'kec' => $request->input('kec'),
+     //        'kab' => $request->input('kab'),
+     //        'prov' => $request->input('prov'),
+     //        'jumlah' => $request->input('jumlah'),
+     //        'tgl_kirim' => $request->input('tgl_kirim'),
+     //        'catatan' => $request->input('catatan'),
+     //        'note_papan_bunga' => $request->input('note_papan_bunga'),
+     //        'alamat_penerima' => $request->input('alamat_penerima'),
+     //        'nama_penerima' => $request->input('nama_penerima'),
+     //        'email_penerima' => $request->input('email_penerima'),
+     //        'telp_penerima' => $request->input('telp_penerima')
+     //     ];
 
 
 
         // baru
 
-         // session([
-         //   'images' => $request->input('image'),
-         //    'harga' => $request->input('harga'),
-         //    'namaa_product' => $request->input('nama_product'),
-         //    'kel' => $request->input('kel'),
-         //    'kec' => $request->input('kec'),
-         //    'kab' => $request->input('kab'),
-         //    'prov' => $request->input('prov'),
-         //    'jumlah' => $request->input('jumlah'),
-         //    'tgl_kirim' => $request->input('tgl_kirim'),
-         //    'catatan' => $request->input('catatan'),
-         //    'note_papan_bunga' => $request->input('note_papan_bunga'),
-         //    'alamat_penerima' => $request->input('alamat_penerima'),
-         //    'nama_penerima' => $request->input('nama_penerima'),
-         //    'email_penerima' => $request->input('email_penerima'),
-         //    'telp_penerima' => $request->input('telp_penerima')
-         // ]);
+        $harga = $request->input('harga');
+        $qty = $request->input('jumlah');
+        $total_harga = $harga * $qty;
+
+        $sess =  session([
+            'kode_product' => $request->input('kode_product'),
+            'images' => $request->input('image'),
+            'kode_product' => $request->input('kode_product'),
+            'kode_seller' => $request->input('kode_seller'),
+            'kategori' => $request->input('kategori'),
+            'harga' => $request->input('harga'),
+            'nama_product' => $request->input('nama_product'),
+            'kel' => $request->input('kel'),
+            'kec' => $request->input('kec'),
+            'kab' => $request->input('kab'),
+            'prov' => $request->input('prov'),
+            'jumlah' => $request->input('jumlah'),
+            'harga' => number_format($harga, 0, ',', '.'),
+            'total_harga' => number_format($total_harga, 0, ',', '.'),
+            'tgl_kirim' => $request->input('tgl_kirim'),
+            'catatan' => $request->input('catatan'),
+            'note_order' => $request->input('note_order'),
+            'alamat_penerima' => $request->input('alamat_penerima'),
+            'nama_penerima' => $request->input('nama_penerima'),
+            'email_penerima' => $request->input('email_penerima'),
+            'telp_penerima' => $request->input('telp_penerima')
+         ]);
 
          // Endbaru
 
@@ -175,14 +188,20 @@ class ProductCtontroller extends Controller
         //  $emailPenerima =  $value['email_penerima'];
         //  $phonePenerima =  $value['telp_penerima'];
 
-        $harga  = $cart["$nama_product"]['harga'];
-         $namaPenerima =  $cart["$nama_product"]['nama_penerima'];
-         $emailPenerima =  $cart["$nama_product"]['email_penerima'];
-         $phonePenerima =  $cart["$nama_product"]['telp_penerima'];
+        // $harga  = $cart["$nama_product"]['harga'];
+        //  $namaPenerima =  $cart["$nama_product"]['nama_penerima'];
+        //  $emailPenerima =  $cart["$nama_product"]['email_penerima'];
+        //  $phonePenerima =  $cart["$nama_product"]['telp_penerima'];
+
+         $harga  = session('harga');
+         $namaPenerima =  session('nama_penerima');
+         $emailPenerima =  session('email_penerima');
+         $phonePenerima =  session('telp_penerima');
+
  
         
 
-           return view('coba2', ['cari' => $cart], ['namaPenerima' => $namaPenerima, 'harga' => $harga, 'emailPenerima' => $emailPenerima, 'phonePenerima' => $phonePenerima]);
+           return view('coba2', ['namaPenerima' => $namaPenerima, 'harga' => $harga, 'emailPenerima' => $emailPenerima, 'phonePenerima' => $phonePenerima]);
 
    }
 
@@ -312,10 +331,9 @@ class ProductCtontroller extends Controller
         var_dump($result);
         echo '</pre>' ;
 
-      
+        $kode_product = $request->input('kode_product');
         $name = $request->input('name');
         $email = $request->input('email');
-        $no_hp =  $request->input('no_hp');
         $status_code =  $result['status_code'];
         $order_id = $result['order_id'];
         $gross_amount = $result['gross_amount'];
@@ -324,10 +342,9 @@ class ProductCtontroller extends Controller
         $transaction_status = $result['transaction_status'];
 
        $input = DB::table('tbl_payment')->insert([
-
-                'name' => $name,
-                'no_hp' => $no_hp,
-                'email' => $email,
+                'kode_product' => $kode_product,
+                'name_buyer' => $name,
+                'email_buyer' => $email,
                 'order_id' => $order_id,
                 'gross_amaount' => $gross_amount,
                 'payment_type'=> $payment_type,
@@ -335,6 +352,27 @@ class ProductCtontroller extends Controller
                 'transaction_status' => $transaction_status
                 
             ]);   
+
+
+                    $user =  DB::table('tbl_order')->insert([
+                            'order_id' => $order_id,
+                            'kode_product' => $kode_product,
+                            'kode_seller' => session('kode_seller'),
+                            'name_buyer' => $name,
+                            'kategori' => session('kategori'),
+                            'waktu' => $transaction_time,
+                            'tgl_kirim' =>session('tgl_kirim'),
+                            'catatan' =>session('catatan'), 
+                            'catatan_pesanan' => session('note_order'),
+                            'alamat_penerima' => session('alamat_penerima'),
+                            'nama_penerima' => session('nama_penerima'),
+                            'email_penerima' => session('email_penerima'),
+                            'telp_penerima' => session('telp_penerima'),
+                            'harga' => session('harga'),
+                            'qty' => session('jumlah'),
+                            'total' => session('total_harga'),
+                        ]);
+              
 
         return redirect('/');
         
@@ -377,7 +415,7 @@ class ProductCtontroller extends Controller
    // }
 
     function hapuskeranjang(Request $request){
-        $request->session()->forget('product');
+        $request->session()->forget(['images','harga','nama_product','tgl_kirim','kel','kec','kab','prov','jumlah','catatan','note_papan_bunga','nama_penerima','alamat_penerima','telp_penerima']);
         return redirect('/');
     }
 

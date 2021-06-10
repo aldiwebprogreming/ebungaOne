@@ -50,7 +50,7 @@
 
     <ul class="navbar-nav ml-auto">
 
-        @if(!session('name'))
+        @if(!session('name_buyer'))
            <li class="nav-item">
               <a class="nav-link" href="{{url('ebunga/login')}}">Login</a>
             </li>
@@ -59,7 +59,7 @@
             </li>
          @else
           <li class="nav-item">
-             <a class="nav-link" href="#">{{session('name')}}</a>
+             <a class="nav-link" href="#">{{session('name_buyer')}}</a>
           </li>
 
            <li class="nav-item">

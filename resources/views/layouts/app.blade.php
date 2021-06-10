@@ -61,7 +61,8 @@
         <div class="row  justify-content-center">
           <div class="col-lg-6">
             <h3>ebunga</h3>
-            <a href="">Login Seller</a> || <a href="{{url('register/seller')}}">Register Seller</a>
+            <br>
+            <a href="{{url('seller/login')}}">Login Seller</a> || <a href="{{url('seller/register')}}">Register Seller</a>
             <p>Et aut eum quis fuga eos sunt ipsa nihil. Labore corporis magni eligendi fuga maxime saepe commodi placeat.</p>
           </div>
         </div>
@@ -85,15 +86,18 @@
     </div>
 
     <div class="container footer-bottom clearfix">
-      <div class="copyright">
-        &copy; Copyright <strong><span>eNno</span></strong>. All Rights Reserved
-      </div>
+      <center>
+          <div class="copyright">
+
+            &copy; Copyright <strong><span>ebunga</span></strong>. All Rights Reserved
+          </div>
+      </center>
       <div class="credits">
         <!-- All the links in the footer should remain intact. -->
         <!-- You can delete the links only if you purchased the pro version. -->
         <!-- Licensing information: https://bootstrapmade.com/license/ -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/enno-free-simple-bootstrap-template/ -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+       
       </div>
     </div>
   </footer>

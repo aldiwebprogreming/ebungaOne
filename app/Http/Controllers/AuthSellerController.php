@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Mail\SendEmail;
+use Illuminate\Support\Facades\Mail;
 use Session;
 
 class AuthSellerController extends Controller
@@ -49,6 +51,13 @@ class AuthSellerController extends Controller
 			
 		]);
 
+		// fitur send email
+		$nama = $request->full_name;
+		$kode = $kode_seller;
+		$link = "http://localhost:8000/seller/aktivasi";
+		Mail::to($request->email)->send(new SendEmail($nama, $kode, $link));
+		// Endfitur send email
+
 		if ($insert) {
 			Session::flash('sukses','Ini notifikasi SUKSES');
 				return redirect('seller/login');
@@ -82,7 +91,10 @@ class AuthSellerController extends Controller
 		// echo $cek->email;
 		
 		if ($cek == true) {
-			if (password_verify($pass, $cek->password)) {
+			if($cek->status == 0){
+				return redirect('seller/login')->with('toast_error', 'Activate your account');
+			}
+			else if (password_verify($pass, $cek->password)) {
 				session([
 					'email' => $email,
 					'name' => $cek->full_neme,
@@ -97,12 +109,22 @@ class AuthSellerController extends Controller
 				 return redirect('seller/login')->with('toast_error', 'Password wrong');
 			}
 		} else {
-			 return redirect('seller/login')->with('toast_error', 'Account wrong');;
+			 return redirect('seller/login')->with('toast_error', 'Account wrong');
 		}
 
 		
 			
 		
+	}
+
+	function aktivasi($seller){
+		$affected = DB::table('tbl_akun_seller')
+              ->where('kode_seller', $seller)
+              ->update(['status' => 1]);
+
+              if ($affected) {
+              		return redirect('seller/login')->with('success', 'Successful activation');;
+              }
 	}
 
 	function logout(Request $request){

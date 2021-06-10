@@ -69,23 +69,13 @@
                 		<small>{{session('note_papan_bunga')}}</small>
                 	</div>
 
-                  <div class="col-sm-6 mb-4">
-                    <small style="font-weight: bold;">Qty</small><br>
-                    <small>{{session('jumlah')}}</small>
-                  </div>
-
-                  <div class="col-sm-6 mb-4">
-                    <small style="font-weight: bold;">Harga</small><br>
-                    <small>Rp.{{session('harga')}}</small>
-                  </div>
-
                 	<div class="col-sm-12 mb-4">
                 		<small style="font-weight: bold;">Alamat Penerima</small><br>
                 		<small>{{session('alamat_penerima')}}</small>
                 	</div>
 
 
-                	
+                	<h4 style="float: right; color: orange;">Harga : Rp.{{session('harga')}}   </h4>
 
                 </div>
 
@@ -108,7 +98,7 @@
 			  <div class="card-header">Summary</div>
 			  <div class="card-body">
 			    <small style="font-size: 20px;">Grand total</small>
-			    <small class="float-right" style="font-size: 20px;">Rp. {{session('total_harga')}}</small>
+			    <small class="float-right" style="font-size: 20px;">Rp. {{session('harga')}}</small>
 			    <hr>
     
             
@@ -116,7 +106,7 @@
 			     <hr>
               
                     
-             @if(session('name_buyer') == false) 
+             @if(session('name') == false) 
 			     <center>
 
               <!-- Button trigger modal -->
@@ -137,10 +127,9 @@
                     <div class="modal-body">
                       
                        <div class="card-body">
-                    <form method="post" action="">
+                    <form method="POST" action="{{ route('login') }}">
                         @csrf
 
-                        <input type="hidden" name="link" value="{{url()->full()}}">
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
@@ -214,19 +203,16 @@
 
 
 
-        @if(session('name_buyer') == true)
+        @if(session('name') == true)
 
           <?php 
 
-            $name = session('name_buyer');
-            $email = session('email_buyer');
-            $kode_product = session('kode_product');
+            $name = session('name');
+            $email = session('email');
 
            ?>
 
         <form id="payment-form" method="post" action="snapfinish">
-          <input type="hidden" name="kode_product" value="{{$kode_product}}">
-        
           <input type="hidden" name="name" value="{{$name}}">
           <input type="hidden" name="email" value="{{$email}}">
           <input type="hidden" name="no_hp" value="<?= $phonePenerima ?>">

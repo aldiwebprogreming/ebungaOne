@@ -78,8 +78,15 @@ input.invalid {
 
           <div class="col-lg-7 mt-2 mt-lg-0 d-flex align-items-stretch">
 
-            <form id="regForm" action="{{$detail->slug_product}}/{{'detail2'}}" method="POST">
+            <form id="regForm" action="{{'detail2'}}" method="POST">
                @csrf
+                <input type="hidden" name="kode_product" class="form-control" value="{{$detail->kode_product}}">
+
+                <input type="hidden" name="kode_seller" class="form-control" value="{{$detail->kode_seller}}">
+
+                <input type="hidden" name="harga" value="{{$detail->harga}}">
+
+                <input type="hidden" name="kategori" class="form-control" value="{{$detail->kategori}}">
 
                <input type="hidden" name="image" class="form-control" value="{{$detail->images}}">
 
@@ -97,7 +104,7 @@ input.invalid {
 
               <div class="label mb-4">
                 <h3>{{$detail->nama_product}}</h3>
-                <span>{{$detail->keterangan}}</span>
+                <span>Rp. <?php echo number_format($detail->harga, 0, ',', '.'); ?> </span>
                 <p class="mt-3">
                     <i class="far fa-heart" style="color: red"></i>
                     <i class="far fa-heart" style="color: red"></i>
@@ -118,11 +125,11 @@ input.invalid {
 
                   <div class="col-md-6">
                      <label>Jumlah</label>
-                    <input type="number" oninput="this.className= 'dfdfdfd'" class="form-control" min="1" name="jumlah">
+                    <input type="number" oninput="this.className= ''" class="form-control" min="1" name="jumlah" value="1">
                   </div>
                  <div class="col-md-6">
                    <label>Tgl Kirim</label>
-                    <input placeholder="{{$tgl}}"  name="" type="text" onfocus="(this.type='date')" id="date" oninput="this.className= ''" class="form-control" value="{{$tgl}}" name="tgl_kirim">
+                    <input placeholder="{{$tgl}}"  name="tgl_kirim" type="text" onfocus="(this.type='date')" id="date" oninput="this.className= ''" class="form-control" value="{{$tgl}}" name="tgl_kirim">
                   </div>
 
                   <div class="col-md-6 mt-3">
@@ -130,8 +137,8 @@ input.invalid {
                     <textarea class="form-control" oninput="this.className=''"  style="height: 100px;" name="catatan"></textarea>
                   </div>
                  <div class="col-md-6 mt-3">
-                    <label>Tulisan pada papan bunga</label>
-                    <textarea class="form-control" oninput="this.className=''" style="width: 200px; height: 100px;" name="note_papan_bunga"></textarea>
+                    <label>Tulisan pada pesanan</label>
+                    <textarea class="form-control" oninput="this.className=''" style="width: 200px; height: 100px;" name="note_order"></textarea>
                   </div>
 
 
@@ -270,6 +277,33 @@ function fixStepIndicator(n) {
   x[n].className += " active";
 }
     </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+<script>
+  const vm = new Vue({
+    el: "#app",
+    data: function(){
+      return{
+        gambar: '',
+        preview: '',
+        
+
+      }
+    },
+
+    methods: {
+      
+      cek : function(){
+        
+        
+      },
+
+
+    }
+  })
+</script>
 
 @endsection
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use\App\Product;
+use\App\Order;
 
 class SellerController extends Controller
 {
@@ -40,6 +42,7 @@ class SellerController extends Controller
         $id_prov = session('prov');
         $id_kab = session('kab');
         $id_kec = session('kec');
+        $kode_seller = session('kode_seller');
 
         $zona_seller = DB::table('tbl_area')->where('kode_seller', $kode_seller)->get();
         $prov = DB::table('tbl_provinsi')->where('id_prov', $id_prov)->first();
@@ -50,11 +53,17 @@ class SellerController extends Controller
         $seleksi = ltrim($str, "KAB.");
         $slug_product = strtolower(Str::of("$request->nama_product")->slug('-'));
 
+        $kode = rand(1, 100000);
+        $kode_product = "PRD".$kode;
+
 
 
         foreach ($zona_seller as $data) {
              $slug = strtolower(Str::of($data->kel." ".$data->kec." ".$seleksi." ".$prov->nama)->slug('-'));
             $insert = DB::table('product')->insert([
+            'kode_product' => $kode_product,
+            'kode_seller' => $kode_seller,
+            'kategori' => $request->kategori,
             'slug' => $slug,
             'kelurahan' => $data->kel,
             'kecamatan' => $data->kec,
@@ -64,7 +73,10 @@ class SellerController extends Controller
             'nama_product' => $request->nama_product,
             'keterangan' => $request->deks_product,
             'images'  => $imgName,   
-            'harga' => $request->harga       
+            'harga' => $request->harga,
+            'qty' => $request->qty ,
+            'date_upload' =>  date('Y-m-d'),
+            'status' => 0,
         ]);
 
         
@@ -120,7 +132,8 @@ class SellerController extends Controller
             'kel' => $get[$i],
             'kec' => $kec->nama,
             'kab' => $kab1->nama,
-            'provinsi' => $prov1->nama,    
+            'provinsi' => $prov1->nama,  
+            'status' => 0,  
         ]);
 
         
@@ -147,11 +160,36 @@ class SellerController extends Controller
     function list_zona(){
         $kode = session('kode_seller');
         $get = DB::table('tbl_area')->where('kode_seller', $kode)->get();
-        foreach ($get as $data) {
-            $kec = DB::table('tbl_area')->where('kec', $data->kec)->first();
-        }
-        return view('seller/list_zona', ['list' => $get, 'kec' => $kec]);
+        // foreach ($get as $data) {
+        //     $kec = DB::table('tbl_area')->where('kec', $data->kec)->first();
+        // }
+        return view('seller/list_zona', ['list' => $get]);
        
       
+    }
+
+    function list_product(){
+        $kode_seller = session('kode_seller');
+        $product = Product::where('kode_seller', $kode_seller)->get();
+        return view('seller/list_product', ['product' => $product]);
+    }
+
+
+    function list_order(){
+
+        $kode_seller = session('kode_seller');
+
+        $list_order = DB::table('tbl_order')->where('kode_seller', $kode_seller)->get();
+
+        return view('seller/list_order', ['list_order' => $list_order]);
+
+
+    }
+
+    function detail_order($order_id){
+
+        $detail = DB::table('tbl_order')->where('order_id', $order_id)->first();
+        return view('seller/detail_order',['detail' => $detail]);
+
     }
 }

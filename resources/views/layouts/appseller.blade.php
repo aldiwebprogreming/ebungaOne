@@ -140,6 +140,13 @@
             </a>
           </li>
 
+           <li class="nav-item">
+            <a class="nav-link" href="{{url('seller/list-product')}}">
+              <i class="icon-paper menu-icon"></i>
+              <span class="menu-title">List Product</span>
+            </a>
+          </li>
+
           <li class="nav-item">
             <a class="nav-link" href="{{url('seller/set-zona')}}">
               <i class="icon-grid menu-icon"></i>
@@ -152,6 +159,14 @@
             <a class="nav-link" href="{{url('seller/list-zona')}}">
               <i class="icon-table menu-icon"></i>
               <span class="menu-title">List Coverage Zona</span>
+            </a>
+          </li>
+
+
+           <li class="nav-item">
+            <a class="nav-link" href="{{url('seller/order')}}">
+              <i class="icon-table menu-icon"></i>
+              <span class="menu-title">Order</span>
             </a>
           </li>
 

@@ -23,7 +23,7 @@ Route::view('select2','select2');
 
 Route::get('product/{slug}','ProductCtontroller@index');
 
-Route::get('product/card/{nama_product}','ProductCtontroller@card');
+Route::get('product/card/{slug_product}/{slug}','ProductCtontroller@card');
 
 Route::post('product/card/{nama_product}/detail','ProductCtontroller@tamabahSession')
 ;
@@ -33,6 +33,7 @@ Route::post('product/card/{nama_product}/detail','ProductCtontroller@tamabahSess
 Route::post('product/card/{nama_product}/detail2','ProductCtontroller@keranjang');
 Route::get('product/card/{nama_product}/snaptoken/{harga}/{namaPenerima}/{emailPenerima}/{phonePenerima}','ProductCtontroller@token');
 Route::post('product/card/{nama_product}/snapfinish','ProductCtontroller@finish');
+Route::get('hapuskeranjang', 'ProductCtontroller@hapuskeranjang');
 
 // Route::get('register','atuhController@index');
 
@@ -40,9 +41,11 @@ Route::get('ebunga/register','AuthUserController@register');
 Route::get('ebunga/login','AuthUserController@index');
 Route::post('ebunga/creat-register','AuthUserController@creat');
 Route::post('ebunga/ceklogin','AuthUserController@cek_login');
+Route::post('ebunga/ceklogin-shop', 'AuthUserController@cek_loginshop');
 Route::get('ebunga/logout', 'AuthUserController@logout');
+Route::get('ebunga/aktivasi/{kode_buyer}', 'AuthUserController@aktivasi');
 
-Route::get('hapuskeranjang', 'ProductCtontroller@hapuskeranjang');
+
 
 // end snap token terbaru 
 
@@ -78,13 +81,14 @@ Route::post('email/send', 'sendEmailController@send');
 
 
 //route seller
-Route::get('register/seller','AuthSellerController@index');
+Route::get('seller/register','AuthSellerController@index');
+Route::get('seller/login','AuthSellerController@login');
 Route::get('getkabupaten/{idprov}','GetController@index');
 Route::get('getkecamatan/{idkab}','GetController@getKec');
 Route::post('daftar','AuthSellerController@daftar');
-Route::get('seller/login','AuthSellerController@login');
 Route::post('cek/seller','AuthSellerController@store');
 Route::get('seller/logout','AuthSellerController@logout');
+
 
 // Dashbord seller
 Route::get('seller','SellerController@index')->middleware('Ceksession');
@@ -94,7 +98,19 @@ Route::get('seller/set-zona', 'SellerController@setzona')->middleware('Ceksessio
 Route::get('seller/listkelurahan/{id}', 'SellerController@listkeluarahan')->middleware('Ceksession');
 Route::post('seller/creat-zona', 'SellerController@inputzona')->middleware('Ceksession');
 Route::get('seller/list-zona', 'SellerController@list_zona')->middleware('Ceksession');
+Route::get('seller/list-product', 'SellerController@list_product')->middleware('Ceksession');
+Route::get('seller/order', 'SellerController@list_order')->middleware('Ceksession');
+Route::get('seller/detail-order/{id_order}', 'SellerController@detail_order')->middleware('Ceksession');
 
 
+
+// route kirim emial
+Route::get('/kirimemail','KirimEmailController@index');
+// verifkasi akun seller
+Route::get('seller/aktivasi/{seller}', 'AuthSellerController@aktivasi');
 
 // ->middleware('Ceksession');]
+
+
+
+

@@ -1,6 +1,6 @@
 @extends('layouts/app')
 
-@section('title','Login Seller')
+@section('title','Login')
 
 
 
@@ -122,6 +122,8 @@ button:hover {
       </div>
 
       <button type="submit" class="btn btn-success">SIGN IN</button>
+     <a href="{{url('ebunga/register')}}" class="float-right"> Register account ? </a>
+     <a href="#" class="float-right">Forget Password ? , </a>
     
     
 </form>
