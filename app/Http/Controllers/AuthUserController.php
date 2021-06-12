@@ -39,6 +39,7 @@ class AuthUserController extends Controller
     			session([
     				'name_buyer' => $user->name,
     				'email_buyer' => $user->email,
+                   'kode_buyer' => $user->kode_buyer,
     			]);
     			return redirect('/');
     		}else {
@@ -70,6 +71,7 @@ class AuthUserController extends Controller
                 session([
                     'name' => $user->name,
                     'email' => $user->email,
+                    'kode_buyer' => $user->kode_buyer,
                 ]);
                 return redirect("$link");
             }else {

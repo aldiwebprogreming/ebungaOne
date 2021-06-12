@@ -56,6 +56,7 @@ Route::get('product/{nama_product}/detail','ProductCtontroller@cart');
 // Route::get('product/{nama_product}/detail','ProductCtontroller@card');
 
 Route::get('product/card/{nama_product}/Checkout','BayarController@render');
+Route::get('ebunga/list-order', 'ProductCtontroller@listOrderBuyer');
 
 
 

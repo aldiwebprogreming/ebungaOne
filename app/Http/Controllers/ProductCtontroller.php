@@ -371,10 +371,11 @@ class ProductCtontroller extends Controller
                             'harga' => session('harga'),
                             'qty' => session('jumlah'),
                             'total' => session('total_harga'),
+                            'status' => $transaction_status,
                         ]);
               
 
-        return redirect('/');
+     return redirect("ebunga/list-order/");
         
 
     }
@@ -418,6 +419,15 @@ class ProductCtontroller extends Controller
         $request->session()->forget(['images','harga','nama_product','tgl_kirim','kel','kec','kab','prov','jumlah','catatan','note_papan_bunga','nama_penerima','alamat_penerima','telp_penerima']);
         return redirect('/');
     }
+
+
+function listOrderBuyer(){
+
+    $name_buyer = session('name_buyer');
+    $list_order = DB::table('tbl_order')->where('name_buyer', $name_buyer)->get();
+    return view('list_order',['list_order' => $list_order]);
+
+}
 
 
 }

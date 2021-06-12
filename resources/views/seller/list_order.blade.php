@@ -31,7 +31,7 @@
                                   <td>{{$data->kategori}}</td>
                                   <td>{{$data->name_buyer}}</td>
                                   <td>{{$data->tgl_kirim}}</td>
-                                  <td></td>
+                                  <td><a href="#" class="btn btn-primary">{{$data->status}}</a></td>
                                  <!--  <td>{{$data->qty}}</td> -->
                               </tr>
                               @endforeach
